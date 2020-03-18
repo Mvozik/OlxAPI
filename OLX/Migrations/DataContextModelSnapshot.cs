@@ -128,6 +128,9 @@ namespace OLX.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
@@ -135,6 +138,9 @@ namespace OLX.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Phonenumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

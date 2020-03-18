@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OLX.Data;
 using OLX.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace OLX.Repo
 {
@@ -14,24 +15,51 @@ namespace OLX.Repo
         {
             _context = context;
         }
-        public Task<bool> AddMessage(Message message)
+        public async Task<bool> AddMessage(Message message)
         {
-            throw new NotImplementedException();
+            if (message.Text == null)
+            { return false; }
+            else
+            {
+                message.Id = Guid.NewGuid();
+                await _context.Messages.AddAsync(message);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
         }
 
-        public Task<bool> DeleteMessage(Guid Id)
+        public async Task<bool> DeleteMessage(Guid Id)
         {
-            throw new NotImplementedException();
+            var message = await _context.Messages.FirstOrDefaultAsync(u => u.Id == Id);
+            if (message == null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Messages.Remove(message);
+                await _context.SaveChangesAsync();
+                return true;
+            }
         }
 
-        public Task<Message> GetMessage(Guid Id)
+        public async Task<List<Message>> GetMessages()
         {
-            throw new NotImplementedException();
+            var messages = await _context.Messages.ToListAsync();
+            if (messages == null)
+                return null;
+            return messages;
         }
 
-        public Task<List<Message>> GetMessages()
+        public async Task<Message> GetMessage(Guid Id)
         {
-            throw new NotImplementedException();
+            var message = await _context.Messages.FirstOrDefaultAsync(u => u.Id == Id);
+
+            return message;
         }
+
+       
+        
     }
 }

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using OLX.Domain;
 
 namespace OLX.Repo
 {
@@ -13,29 +15,55 @@ namespace OLX.Repo
         {
             _context = context;
         }
-        public Task<bool> AddSubcategory(SubcategoryRepo subcategory)
+        public async Task<bool> AddSubCategory(Subcategory Subcategory)
         {
-            throw new NotImplementedException();
+            if (Subcategory.Name == null)
+            { return false; }
+            else
+            {
+                Subcategory.Id = Guid.NewGuid();
+                await _context.Subcategories.AddAsync(Subcategory);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
         }
 
-        public Task<bool> DeleteSubcategory(Guid Id)
+        public async Task<bool> DeleteSubCategory(Guid Id)
         {
-            throw new NotImplementedException();
+            var Subcategory = await _context.Subcategories.FirstOrDefaultAsync(u => u.Id == Id);
+            if (Subcategory == null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Subcategories.Remove(Subcategory);
+                await _context.SaveChangesAsync();
+                return true;
+            }
         }
 
-        public Task<List<SubcategoryRepo>> GetSubcategories()
+        public async Task<List<Subcategory>> GetSubCategories()
         {
-            throw new NotImplementedException();
+            var Subcategories = await _context.Subcategories.ToListAsync();
+            if (Subcategories == null)
+                return null;
+            return Subcategories;
         }
 
-        public Task<SubcategoryRepo> GetSubcategory(Guid Id)
+        public async Task<Subcategory> GetSubCategory(Guid Id)
         {
-            throw new NotImplementedException();
+            var Subcategory = await _context.Subcategories.FirstOrDefaultAsync(u => u.Id == Id);
+
+            return Subcategory;
         }
 
-        public Task<bool> UpdateSubcategory(SubcategoryRepo subcategory)
+        public async Task<bool> UpdateSubCategory(Subcategory Subcategory)
         {
-            throw new NotImplementedException();
+            _context.Subcategories.Update(Subcategory);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

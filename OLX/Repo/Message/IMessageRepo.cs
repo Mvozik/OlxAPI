@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OLX.Repo
 {
-    interface IMessageRepo
+    public interface IMessageRepo
     {
         Task<List<Message>> GetMessages();
         Task<Message> GetMessage(Guid Id);

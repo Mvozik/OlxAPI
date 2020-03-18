@@ -12,6 +12,6 @@ namespace OLX.Repo
         Task<Category> GetCategory(Guid Id);
         Task<bool> DeleteCategory(Guid Id);
         Task<bool> UpdateCategory(Category category);
-        Task<bool> AddCategor(Category category);
+        Task<bool> AddCategory(Category category);
     }
 }

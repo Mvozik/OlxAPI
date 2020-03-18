@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace OLX.Repo
 {
-    interface ISubCategoryRepo
+    public interface ISubCategoryRepo
     {
-        Task<List<SubcategoryRepo>> GetSubcategories();
-        Task<SubcategoryRepo> GetSubcategory(Guid Id);
-        Task<bool> DeleteSubcategory(Guid Id);
-        Task<bool> UpdateSubcategory(SubcategoryRepo subcategory);
-        Task<bool> AddSubcategory(SubcategoryRepo subcategory);
+        Task<List<Subcategory>> GetSubCategories();
+        Task<Subcategory> GetSubCategory(Guid Id);
+        Task<bool> DeleteSubCategory(Guid Id);
+        Task<bool> UpdateSubCategory(Subcategory subcategory);
+        Task<bool> AddSubCategory(Subcategory subcategory);
     }
 }

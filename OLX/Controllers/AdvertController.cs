@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OLX.Data;
+
 using OLX.Domain;
 using OLX.Repo;
 using OLX.Routes;
@@ -20,7 +20,7 @@ namespace OLX.Controllers
             _repo = repo;
         }
 
-        [HttpGet(ApiRoutes.Posts.Get)]
+        [HttpGet(ApiRoutes.Adverts.Get)]
         public async Task<IActionResult> GetAdvert([FromRoute]Guid AdvertId)
         {
             var respons = await _repo.GetAdvert(AdvertId);
@@ -30,7 +30,7 @@ namespace OLX.Controllers
             return Ok(respons);
         }
 
-        [HttpPost(ApiRoutes.Posts.PostAdvert)]
+        [HttpPost(ApiRoutes.Adverts.PostAdvert)]
         public async Task<IActionResult> AddAdvert([FromBody]Advert advert)
         {
             var respons = await _repo.AddAdvert(advert);
@@ -39,12 +39,12 @@ namespace OLX.Controllers
             else
             {
                 var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-                var locationUri = baseUrl + "/" + ApiRoutes.Posts.Get.Replace("{AdvertId}", advert.Id.ToString());
+                var locationUri = baseUrl + "/" + ApiRoutes.Adverts.Get.Replace("{AdvertId}", advert.Id.ToString());
                 return Created(locationUri, advert);
             }
     
         }
-        [HttpDelete(ApiRoutes.Posts.DeleteAdvert)]
+        [HttpDelete(ApiRoutes.Adverts.DeleteAdvert)]
         public async Task<IActionResult> DeleteAdvert([FromRoute]Guid AdvertId)
         {
             var respons = await _repo.DeleteAdvert(AdvertId);
@@ -53,7 +53,7 @@ namespace OLX.Controllers
             return Ok();
 
         }
-        [HttpPut(ApiRoutes.Posts.UpdateAdvert)]
+        [HttpPut(ApiRoutes.Adverts.UpdateAdvert)]
         public async Task<IActionResult> UpdateAdvert([FromBody]Advert advert)
         {
             var respons = await _repo.UpdateAdvert(advert);
@@ -62,7 +62,7 @@ namespace OLX.Controllers
             return Ok();
         }
 
-        [HttpGet(ApiRoutes.Posts.GetAdverts)]
+        [HttpGet(ApiRoutes.Adverts.GetAdverts)]
         public async Task<IActionResult> GetAdverts()
         {
             var respons = await _repo.GetAdverts();

@@ -33,7 +33,10 @@ namespace OLX.Repo
         public async Task<bool> DeleteAdvert(Guid Id)
         {
             var Advert = await _context.Adverts.FirstOrDefaultAsync(u => u.Id == Id);
-            var xd=_context.Adverts.Remove(Advert);
+            if(Advert==null)
+                return false;
+            else
+            _context.Adverts.Remove(Advert);
             await _context.SaveChangesAsync();
             return true;
         }

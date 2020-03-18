@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace OLX.Repo
 {
-    interface IUserRepo
+    public interface IUserRepo
     {
-        Task<List<UserRepo>> GetUsers();
-        Task<UserRepo> GetUser(Guid Id);
+        User Authenticate(string username, string password);
+        Task<bool> AddUser(User user);
+        IEnumerable<User> GetAll();
         Task<bool> DeleteUser(Guid Id);
-        Task<bool> UpdateUser(UserRepo user);
-        Task<bool> AddAUser(UserRepo user);
+
+
     }
 }
